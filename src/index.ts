@@ -66,7 +66,7 @@ const OBJEKT_LISTE: number = 4;
             },
             body: searchString
         });
-        await sleep(getRandomInt(500,2000));
+        await sleep(getRandomInt(2000,5000));
         console.log(searchString);
         checkResponse(await res.text());
     }
