@@ -9,7 +9,8 @@ const GERICHTE: KeyValue = {
     DORTMUND: "R2402",
     ESSEN: "R2503",
     KOELN: "R3306",
-    HERNE: "R2203"
+    HERNE: "R2203",
+    HERNE_WANNE:"R2205"
 };
 
 const OBJEKTE: number[] = [1, 2, 3, 19, 4];
@@ -83,9 +84,11 @@ const OBJEKT_LISTE: number = 4;
                 titel = `${objekt},${anschrift}`;
             } else if (!verkehrswert && label?.includes("Verkehrswert")) {
                 verkehrswert = tds[1].innerHTML?.replace("insgesamt:", "");
+            } else if (!termin && label?.includes("Termin")) {
+                termin = tds[1].querySelector("b")?.innerHTML;
             }
         }
-        return {aktenzeichen, lastModTime, grundbuch, titel, verkehrswert};
+        return {aktenzeichen, lastModTime, grundbuch, titel, verkehrswert, termin};
     }
 
     type TRealEstate = {
@@ -93,7 +96,8 @@ const OBJEKT_LISTE: number = 4;
         titel: string;
         verkehrswert: string;
         grundbuch: string;
-        aktenzeichen: string
+        aktenzeichen: string,
+        termin: string
     }
     const requestRealEstates = async (urls: string[]) => {
         const realEstates: TRealEstate[] = []
@@ -118,8 +122,7 @@ const OBJEKT_LISTE: number = 4;
         const midTable = tables[1];
         const table = midTable ?? tables[0];
         const urls = getUrls(table);
-        const objects = await requestRealEstates(urls);
-        return objects;
+        return await requestRealEstates(urls);
     }
     for (let searchString of searchList) {
         const res = await fetch(host + 'index.php?button=Suchen&all=1', {
@@ -131,7 +134,7 @@ const OBJEKT_LISTE: number = 4;
         });
         await sleep();
         console.log(searchString);
-        getObjects(await res.text());
+        await getObjects(await res.text());
     }
 
 })();
