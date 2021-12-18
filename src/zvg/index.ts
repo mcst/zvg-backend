@@ -5,13 +5,13 @@ import {fetchRealEstateList, requestRealEstates} from "./requestHelper";
 type KeyValue = { [key: string]: string | number };
 const GERICHTE: KeyValue = {
     BERGHEIM: "R3302",
-    // BOCHUM: "R2201",
-    // CASTROP: "R2401",
-    // DORTMUND: "R2402",
-    // ESSEN: "R2503",
-    // KOELN: "R3306",
-    // HERNE: "R2203",
-    // HERNE_WANNE:"R2205"
+    BOCHUM: "R2201",
+    CASTROP: "R2401",
+    DORTMUND: "R2402",
+    ESSEN: "R2503",
+    KOELN: "R3306",
+    HERNE: "R2203",
+    HERNE_WANNE:"R2205"
 };
 
 const OBJEKTE: number[] = [1, 2, 3, 19, 4];
