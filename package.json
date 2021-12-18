@@ -2,16 +2,20 @@
   "name": "zvg",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "ts-node ./src/index.ts"
+    "start": "ts-node src/app.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
     "jsdom": "^19.0.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
     "@types/jsdom": "^16.2.13",
     "@types/node": "^17.0.0",
     "@types/node-fetch": "^2.5.12",
