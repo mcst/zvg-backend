@@ -17,7 +17,7 @@ const GERICHTE: KeyValue = {
 const OBJEKTE: number[] = [1, 2, 3, 19, 4];
 const OBJEKT_LISTE: number = 4;
 
-const host = 'http://www.zvg-portal.de/';
+export const host = 'http://www.zvg-portal.de/';
 
 const getObjekte = (Objekte: number[]) => {
     return Objekte.map((nr, index, list) => (`obj_arr%5B%5D=${nr}${index < list.length - 1 ? "&" : ""}`)).join("");

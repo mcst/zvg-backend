@@ -4,6 +4,6 @@ import {FileHandler} from "./tools/fileHandler";
 
 (async()=> {
     initServer();
-    const zvgData = await doZVGSearch();
-    await FileHandler.write(JSON.stringify(zvgData));
+    // const zvgData = await doZVGSearch();
+    // await FileHandler.write(JSON.stringify(zvgData));
 })();
