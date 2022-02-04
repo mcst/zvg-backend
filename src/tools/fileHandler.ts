@@ -2,10 +2,11 @@ import fs from "fs";
 
 const fileName = "zvg-objects.json"
 
-export class FileHandler {
+  class FileHandler {
     static actions: any = [];
 
     static executeCall = async () => {
+        if(!this.actions) this.actions =  [];
         console.log("executeCall", JSON.stringify(this.actions));
         const action = this.actions[0];
         if (action) {
@@ -29,3 +30,5 @@ export class FileHandler {
         });
     }
 }
+
+export {FileHandler};

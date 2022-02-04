@@ -2,7 +2,9 @@ import express from "express";
 import cors from "cors";
 import {FileHandler} from "../tools/fileHandler";
 import fetch from "node-fetch";
-import fs from "fs";
+// import fs from "fs";
+import {GERICHTE} from "../tools/constants";
+import { ppid } from "process";
 
 const app = express();
 const port = 3000;
@@ -34,6 +36,12 @@ export const initServer = () => {
         res.contentType("application/pdf");
         res.send(buffer);
     });
+
+    app.get('/config', cors(), (req, res)=>{
+        res.send({
+            GERICHTE
+        });
+    })
 
     app.listen(port, () => {
         console.log(`Example app listening at http://localhost:${port}`);
