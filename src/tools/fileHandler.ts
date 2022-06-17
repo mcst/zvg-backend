@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const fileName = "zvg-objects.json"
+const fileName = "./zvg-objects.json"
 
   class FileHandler {
     static actions: any = [];

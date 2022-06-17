@@ -32,12 +32,17 @@ export const initServer = () => {
         });
 
         const buffer = await data.buffer();
-        // saveFile(queryString, buffer);
         res.contentType("application/pdf");
         res.send(buffer);
     });
 
     app.get('/config', cors(), (req, res)=>{
+        res.send({
+            GERICHTE
+        });
+    })
+
+    app.get('/courts', cors(), (req, res)=>{
         res.send({
             GERICHTE
         });
