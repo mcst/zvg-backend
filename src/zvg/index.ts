@@ -6,16 +6,36 @@ import {GERICHTE} from "../tools/constants"
 const OBJEKTE: number[] = [1, 2, 3, 19, 4];
 const OBJEKT_LISTE: number = 4;
 
-export const host = 'http://www.zvg-portal.de/';
+export const host = 'https://www.zvg-portal.de/';
 
-const getObjekte = (Objekte: number[]) => {
-    return Objekte.map((nr, index, list) => (`obj_arr%5B%5D=${nr}${index < list.length - 1 ? "&" : ""}`)).join("");
+const getFormData = (key: string) => {
+    const formData = new FormData();
+    formData.append('ger_name', key);
+    formData.append('order_by', '2');
+    formData.append('land_abk', 'nw');
+    formData.append('ger_id', (GERICHTE as any)[key]);
+    formData.append('az1', '');
+    formData.append('az2', '');
+    formData.append('az3', '');
+    formData.append('az4', '');
+    formData.append('art', '');
+    formData.append('obj', '');
+    formData.append('obj_liste', '4');
+    formData.append('str', '');
+    formData.append('hnr', '');
+    formData.append('plz', '');
+    formData.append('ort', '');
+    formData.append('ortsteil', '');
+    formData.append('vtermin', '');
+    formData.append('btermin', '');
+    OBJEKTE.forEach(obj => formData.append('obj_arr[]', obj.toString()));
+    return formData;
 }
 
 const getSearchList = () => {
-    return Object.keys(GERICHTE).map(key => ({
-        path: `ger_name=${key}&ger_id=${GERICHTE[key]}&${getObjekte(OBJEKTE)}&obj_liste=${OBJEKT_LISTE}&order_by=2&land_abk=nw&az1=&az2=&az3=&az4=&art=&obj=&str=&hnr=&plz=&ort=&ortsteil=&vtermin=&btermin=`,
-        court: key
+    return Object.keys(GERICHTE).map((key:string) => ({
+        court:key,
+        formData: getFormData(key)
     }));
 }
 
@@ -23,12 +43,17 @@ export const doZVGSearch = async() => {
     const realEstates = [];
     const searchList = getSearchList();
     for (let searchItem of searchList) {
-        const {court, path} = searchItem;
-        const res = await fetchRealEstateList(host, path);
-        await sleep();
-        const urls = await getUrls(await res.text(), host);
-        const nextRealEstates = await requestRealEstates(urls, host);
-        realEstates.push({court, realEstates: nextRealEstates});
+        const {court, formData} = searchItem;
+        try {
+            const list = await fetchRealEstateList(host, formData);
+            await sleep();
+            const urls = await getUrls(list, host);
+            const nextRealEstates = await requestRealEstates(urls, host);
+            realEstates.push({court, realEstates: nextRealEstates});
+        } catch (e) {
+            console.log(e);
+        }
     }
     return realEstates;
+
 }

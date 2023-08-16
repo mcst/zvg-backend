@@ -7,7 +7,7 @@ import {GERICHTE} from "../tools/constants";
 import { ppid } from "process";
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(cors());
 export const initServer = () => {

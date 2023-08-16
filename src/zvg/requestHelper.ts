@@ -1,5 +1,4 @@
 import {sleep} from "./helper";
-import fetch from "node-fetch";
 import {getRealEstate} from "./queryHelper";
 
 export const requestRealEstates = async (urls: string[], host:string) => {
@@ -17,12 +16,22 @@ export const requestRealEstates = async (urls: string[], host:string) => {
     return realEstates;
 }
 
-export const fetchRealEstateList = async (host:string, formString:string) => {
-   return await fetch(host + 'index.php?button=Suchen&all=1', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: formString
-    });
+export const fetchRealEstateList = async (host:string, formData:FormData) => {
+    let htmlText = "";
+    try {
+        const response = await fetch(host + 'index.php?button=Suchen', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            htmlText = await response.text();
+
+        } else {
+            console.error('Error:', response.status);
+        }
+    } catch (error) {
+        console.error('Fetch-Error:', error);
+    }
+    return htmlText;
 }

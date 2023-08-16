@@ -68,10 +68,11 @@ type TRealEstate = {
     foto?: string
 }
 
-export const getUrls = async (htmlText: string, host: string) => {
-    const {window} = new JSDOM(htmlText);
-    const doc = window.document;
-    const tables = doc.querySelectorAll('table');
+export const getUrls = async (htmlContent: string, host: string) => {
+
+    const dom = new JSDOM(htmlContent);
+    const document = dom.window.document;
+    const tables = document.querySelectorAll('table');
     const midTable = tables[1];
     const table = midTable ?? tables[0];
     const rows = table?.querySelectorAll('tr');
